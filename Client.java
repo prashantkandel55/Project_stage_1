@@ -12,6 +12,7 @@ public class Client implements Serializable {
     private String phone;
     private String id;
     private List<Wishlist> wishlists;
+    private double balance; // Positive = credit, Negative = debit
 
     // When we make a new client, we auto-generate an ID like C1, C2, etc.
     public Client(String name, String address, String phone) {
@@ -20,6 +21,7 @@ public class Client implements Serializable {
         this.phone = phone;
         this.id = "C" + ClientIdServer.instance().getId(); // unique ID
         this.wishlists = new ArrayList<>();
+        this.balance = 0.0;
     }
 
     // Getters
@@ -27,6 +29,11 @@ public class Client implements Serializable {
     public String getAddress() { return address; }
     public String getPhone() { return phone; }
     public String getId() { return id; }
+    public double getBalance() { return balance; }
+
+    // Setters
+    public void setBalance(double balance) { this.balance = balance; }
+    public void addBalance(double amount) { this.balance += amount; }
 
     // Nicely formatted string so printing a Client shows details
     // Wishlist management methods
@@ -54,6 +61,7 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client: " + name + " (ID: " + id + "), " + address + ", " + phone + 
+               "\nBalance: $" + String.format("%.2f", balance) +
                "\nWishlists: " + wishlists.size();
     }
 }
